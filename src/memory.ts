@@ -16,41 +16,88 @@ const currentGame: Game = {
 
 // Note: key "dictionary" is NOT returned in this function.
 export function getGameInfo() {
-  // FIXME
-  console.log('WARNING getGameInfo is not implemented!');
   return {
-    score: -1,
-    mistakesRemaining: -1,
-    cluesRemaining: -1,
+    score: currentGame.score,
+    mistakesRemaining: currentGame.mistakesRemaining,
+    cluesRemaining: currentGame.cluesRemaining,
   };
 }
 
 export function addWord(word: string) {
-  // FIXME
-  throw new Error('addWord is not implemented!');
+  // error if inactive 
+  if (currentGame.mistakesRemaining === 0) {
+    throw new Error(' ');
+  }
+  for (let element of currentGame.dictionary) {
+    if (word === element) {
+      // already exist 
+      throw new Error(' ');
+    }
+  }
+  currentGame.dictionary.push(word);
+  currentGame.score++;
 }
 
 export function removeWord(word: string) {
-  // FIXME
-  throw new Error('removeWord is not implemented!');
+  if (currentGame.mistakesRemaining === 0) {
+    throw new Error(' ');
+  }
+  const dict = currentGame.dictionary;
+  for (let i = 0; i < dict.length; i++) {
+    if (word === dict[i]) {
+      dict.splice(i, 1);
+      currentGame.score++;
+      return;
+    }
+  }
+  currentGame.mistakesRemaining--;
+  throw new Error(' ');
 }
 
 export function viewDictionary() {
-  // FIXME
-  throw new Error('viewDictionary is not implemented!');
+  if (currentGame.mistakesRemaining === 0) {
+    // inactive game
+  } else {
+    if (currentGame.cluesRemaining === 0) {
+      throw new Error('');
+    } else {
+      currentGame.cluesRemaining--;
+    }
+  }
+  return { dictionary: currentGame.dictionary };
 }
 
 export function resetGame() {
-  // FIXME
-  console.log('WARNING: resetGame is not implemented!');
+  currentGame.score = 0;
+  currentGame.mistakesRemaining =3;
+  currentGame.cluesRemaining = 3;
+  currentGame.dictionary = [];
 }
 
 export function saveGame(name: string) {
-  // FIXME
-  throw new Error('saveGame is not implemented!');
+  if (name === '' || name.match(/^[0-9A-Za-z]+$/) === null) {
+    throw new Error('');
+  }
+  const filename = 'memory_' + name + '.json';
+  if (fs.existsSync(filename) === true) {
+    throw new Error('');
+  }
+  const data = JSON.stringify(currentGame, null, 4);
+  fs.writeFileSync(filename, data);
 }
 
 export function loadGame(name: string) {
-  // FIXME
-  throw new Error('loadGame is not implemented!');
+  if (name === '' || name.match(/^[0-9A-Za-z]+$/) === null) {
+    throw new Error('');
+  }
+  const filename = 'memory_' + name + '.json';
+  if (fs.existsSync(filename) === false) {
+    throw new Error('');
+  }
+  const rawdata = fs.readFileSync(filename,'utf8');
+  const data = JSON.parse(rawdata);
+  currentGame.score = data.score;
+  currentGame.mistakesRemaining = data.mistakesRemaining;
+  currentGame.cluesRemaining = data.cluesRemaining;
+  currentGame.dictionary = data.dictionary;
 }

@@ -4,13 +4,19 @@
   "description": "",
   "main": "src/game.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "ts-node src/game.ts",
+    "test": "jest src",
+    "tsc": "tsc --noEmit",
+    "ts-node": "ts-node",
+    "lint": "eslint src/**.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@types/jest": "^27.5.0",
+    "@types/prompt-sync": "^4.1.1",
+    "@types/random-words": "^1.1.2",
     "@typescript-eslint/eslint-plugin": "^5.23.0",
     "@typescript-eslint/parser": "^5.23.0",
     "eslint": "^8.15.0",
@@ -19,5 +25,9 @@
     "ts-jest": "^28.0.2",
     "ts-node": "^10.7.0",
     "typescript": "^4.6.4"
+  },
+  "dependencies": {
+    "prompt-sync": "^4.2.0",
+    "random-words": "^1.2.0"
   }
 }

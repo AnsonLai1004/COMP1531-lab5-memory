@@ -10,11 +10,7 @@ import {
   saveGame,
 } from './memory';
 
-test('Remove this test and uncomment the tests below', () => {
-  expect(1 + 1).toStrictEqual(2);
-});
 
-/*
 
 // Helper function to remove all memory_[NAME].json files in
 // the current directory.
@@ -61,5 +57,60 @@ describe('removeWord', () => {
 });
 
 // TODO: your other tests here
+describe('viewDictionary', () => {
+  test('no clues remain', () => {
+    addWord('hello'); 
+    expect(viewDictionary()).toMatchObject({
+      dictionary: [ 'hello' ],
+    });
+    addWord('Rex');
+    expect(viewDictionary()).toMatchObject({
+      dictionary: [ 'hello', 'Rex' ],
+    });
+    expect(() => viewDictionary()).not.toThrow(Error);
+    expect(() => viewDictionary()).toThrow(Error);
+  });
 
-*/
+  test('inactive game', () => {
+    expect(() => removeWord('hello')).toThrow(Error);
+    expect(() => removeWord('hello')).toThrow(Error);
+    expect(() => removeWord('hello')).toThrow(Error);
+    expect(() => viewDictionary()).not.toThrow(Error);
+  });
+  // TODO: more tests
+});
+
+test('resetGame', () => {
+  addWord('hello');
+  expect(getGameInfo()).toMatchObject({
+    score: 1, 
+    mistakesRemaining: 3,
+    cluesRemaining: 3,
+  });
+  expect(() => resetGame()).not.toThrow(Error);
+  expect(getGameInfo()).toMatchObject({
+    score: 0, 
+    mistakesRemaining: 3,
+    cluesRemaining: 3,
+  });
+});
+
+describe('saveGame', () => {
+  test('Error', () => {
+    expect(() => saveGame('')).toThrow(Error);
+    expect(() => saveGame('34#@$abc')).toThrow(Error);
+    expect(() => saveGame('abc')).not.toThrow(Error);
+    expect(() => saveGame('abc')).toThrow(Error);
+  });
+});
+
+
+describe('loadGame', () => {
+  test('Error', () => {
+    expect(() => loadGame('')).toThrow(Error);
+    expect(() => saveGame('34#@$abc')).toThrow(Error);
+    expect(() => loadGame('abc')).toThrow(Error);
+    expect(() => saveGame('abc')).not.toThrow(Error);
+    expect(() => loadGame('abc')).not.toThrow(Error);
+  })
+});
