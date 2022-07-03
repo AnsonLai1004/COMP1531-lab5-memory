@@ -254,7 +254,7 @@ Implement the functions in [Interface: Functions](#interface-functions) and ensu
 
 #### Tips
 
-1. For loading and saving files, consider `fs.readFileSync`, `fs.writeFileSync` and `fs.existSync`.
+1. For loading and saving files, consider `fs.readFileSync`, `fs.writeFileSync` and `fs.existsSync`.
 1. To pretty-print an object, specify a space or indent of `4` when converting it into a string. This will make the `JSON` easier to read (e.g. when saving to a file). For example,
     ```javascript
     const myObject = {
